@@ -1,0 +1,31 @@
+@extends('pay.template')
+@section('title_section','Crear nuevo concepto para '.$cuenta->codigo)
+@section('content')
+{!! Form::open(['route'=>['pasajero.store', $cuenta->id], 'method'=>'POST']) !!}
+    <div class="row">
+        <div class="form-group col-lg-6">
+            {!! Form::label('cedula', 'Cedula:') !!}
+            {!! Form::number('cedula', null, ['class'=>'form-control', 'placeholder'=>'cedula', 'required']) !!}
+	    </div>
+        <div class="form-group col-lg-6">
+            {!! Form::label('fecha_nacimiento', 'Fecha de Nacimiento:') !!}
+            {!! Form::date('fecha_nacimiento', null, ['class'=>'form-control', 'placeholder'=>'Fecha de Nacimiento', 'required']) !!}
+	    </div>
+    </div>
+    <div class="row">
+        <div class="form-grpup col-lg-12">
+            {!! Form::label('nombre', 'Nombre:') !!}
+            {!! Form::text('nombre', null, ['class'=>'form-control', 'placeholder'=>'Nombre', 'required']) !!}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="form-group col-lg-6">
+            {!! Form::submit('Continuar',['class'=>'btn btn-outline-success my-2 my-sm-0'])!!}
+        </div>
+        <div class="form-group col-lg-6">
+            <a href="{{route('pasajero.index', $cuenta->id)}}" class="btn btn-outline-primary my-2 my-sm-0">Regresar</a>
+        </div>
+    </div>
+{!! Form::close() !!}
+@endsection
