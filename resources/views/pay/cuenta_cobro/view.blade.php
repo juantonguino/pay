@@ -1,5 +1,5 @@
 @extends('pay.template')
-@section('title_section','Editar Cuenta de Cobro')
+@section('title_section','Ver Cuenta de Cobro')
 @section('content')
 {!! Form::open(['route'=>['cuentacobro.update', $cuenta->id], 'method'=>'PUT']) !!}
     <div class="row">
@@ -11,6 +11,16 @@
             {!!Form::label('nombre_cliente', 'Cliente:')!!}
 		    {!!Form::select('nombre_cliente', $clientes, $cuenta->cliente_id, ['class'=>'form-control', 'placeholder'=>'Nombre del cliente', 'required', 'disabled'])!!}
 	    </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-6">
+            {!! Form::label('valor_total_letras','Valor Total en Letras:')!!}
+            {!! Form::text('valor_total_letras',$cuenta->valor_total_letras,['class'=>'form-control', 'placeholder'=>'Valor total en letras','required', 'disabled'])!!}
+        </div>
+        <div class="form-group col-lg-6">
+            {!! Form::label('valor_total_numeros','Valor Total en Numeros:') !!}
+            {!! Form::number('valor_total_numeros',$cuenta->valor_total_numeros,['class'=>'form-control', 'placeholder'=>'Valor total en numeros','required', 'disabled'])!!}
+        </div>
     </div>
     <div class="row">
         <div class="form-group col-lg-6">

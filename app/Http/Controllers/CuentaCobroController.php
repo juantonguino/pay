@@ -10,9 +10,17 @@ use App\Cliente;
 
 use App\CuentaCobro;
 
+use App\Concepto;
+
+use App\Pasajero;
+
 use Illuminate\Support\Facades\DB;
 
 use Laracasts\Flash\Flash;
+
+use \PhpOffice\PhpWord\TemplateProcessor;
+
+use \PhpOffice\PhpWord\PhpWord;
 
 class CuentaCobroController extends Controller
 {
@@ -52,6 +60,8 @@ class CuentaCobroController extends Controller
         $cuenta= new CuentaCobro();
         $cuenta->tipo_servicio_id=$request->tipo_servicio;
         $cuenta->cliente_id=$request->nombre_cliente;
+        $cuenta->valor_total_letras=$request->valor_total_letras;
+        $cuenta->valor_total_numeros=$request->valor_total_numeros;
         $parts= explode("-", $request->ano_mes);
         $cuenta->ano_ejecucuion_servicio=$parts[0];
         $cuenta->mes_ejecucuion_servicio=$parts[1];
@@ -117,6 +127,8 @@ class CuentaCobroController extends Controller
         $parts= explode("-", $request->ano_mes);
         $cuenta->ano_ejecucuion_servicio=$parts[0];
         $cuenta->mes_ejecucuion_servicio=$parts[1];
+        $cuenta->valor_total_letras=$request->valor_total_letras;
+        $cuenta->valor_total_numeros=$request->valor_total_numeros;
         $cuenta->save();
         Flash::warning('Se ha editado la cuenta <b>'.$cuenta->codigo.'</b> satisfactoriamente');
         return redirect()->route('cuentacobro.index');
@@ -132,7 +144,55 @@ class CuentaCobroController extends Controller
     {
         //
     }
-    function report($id){
-        return "espacio para el reporte";
+
+    public function report($id){
+        $templateProcessor= new TemplateProcessor('/home/juantonguino/laravel-projects/pay/resources/docs/cuenta_cobro.docx');
+
+        //modelos
+        $cuenta_cobro= CuentaCobro::find($id);
+        $tipo_servicio= TipoServicio::find($cuenta_cobro->tipo_servicio_id);
+        $cliente=Cliente::find($cuenta_cobro->cliente_id);
+        $conceptos=Concepto::where('cuenta_cobro_id',$cuenta_cobro->id)->get();
+        $pasajeros= Pasajero::where('cuenta_cobro_id',$cuenta_cobro->id)->get();
+        $codigo=$cuenta_cobro->codigo;
+
+        //llenado de plantilla
+        $templateProcessor->setValue('tipo', $tipo_servicio->sigla);
+        $templateProcessor->setValue('codigo', $cuenta_cobro->codigo);
+        $templateProcessor->setValue('total_numero', $cuenta_cobro->valor_total_numeros);
+        $templateProcessor->setValue('total_letras', $cuenta_cobro->valor_total_letras);
+        $templateProcessor->setValue('nombre_empresa', $cliente->nombre);
+        $templateProcessor->setValue('nit', $cliente->nit);
+
+        $date= date('y-m-d');
+        $fecha= explode("-", $date);
+        $dia=$fecha[2];
+        $mes=$fecha[1];
+        $anio=$fecha[0];
+
+        $meses= ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre", "noviembre", "diciembre"];
+        $mes_letra= $meses[((int)$mes)-1];
+
+        $templateProcessor->setValue('day',$dia);
+        $templateProcessor->setValue('month',$mes_letra);
+        $templateProcessor->setValue('year',"20".$anio);
+
+        $templateProcessor->cloneRow('id',sizeof($conceptos));
+        for ($i=0; $i < sizeof($conceptos); $i++) { 
+            $concepto= $conceptos[$i];
+            $id=$i+1;
+            $templateProcessor->setValue(array('valor_letras#'.$id, 'valor_numeros#'.$id, 'concepto#'.$id), array($concepto->valor_letras, $concepto->valor_numeros, $concepto->descripcion));
+        }
+        $templateProcessor->cloneRow('nombre_pasajero', sizeof($pasajeros));
+        for ($i=0; $i < sizeof($pasajeros); $i++) { 
+            $pasajero= $pasajeros[$i];
+            $id=$i+1;
+            $templateProcessor->setValue(array('nombre_pasajero#'.$id, 'documento#'.$id, 'identificacion#'.$id),array($pasajero->nombre, $pasajero->tipo_identificacion, $pasajero->identificacion));
+        }
+
+        //especificaciones tecnicas de la plantilla
+        $templateProcessor->saveAs('$codigo.docx');
+        header("Content-Disposition: attachment; filename=".$codigo.".docx; charset=iso-8859-1");
+        echo file_get_contents('$codigo.docx');
     }
 }

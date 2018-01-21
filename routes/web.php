@@ -16,10 +16,10 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/', function(){
-    return view('index');
+    return view('auth.login');
 });
 
-Route::group(['prefix'=>'pay'], function(){
+Route::group(['prefix'=>'pay', 'middleware'=>['auth']], function(){
     Route::get('/', function(){
         return view('pay.index');
     });
@@ -90,4 +90,18 @@ Route::group(['prefix'=>'pay'], function(){
         'uses'=>'PasajeroController@destroy',
         'as'=>'pasajero.destroy'
     ]);
+
+    Route::get('logout',function()
+    {
+        Auth::logout();
+        return redirect('/');
+    });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

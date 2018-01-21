@@ -12,7 +12,8 @@
 <div class="row">
     <table class="table">
         <thead>
-            <th>Cedula</th>
+            <th>Tipo Identificacion</th>
+            <th>Identificacion</th>
             <th>Nombre</th>
             <th>Fecha de Naciemiento</th>
             <th>Opciones</th>
@@ -20,7 +21,8 @@
         <tbody>
             @foreach($pasajeros as $item)
                 <tr>
-                    <td>{{$item->cedula}}</td>
+                    <td>{{$item->tipo_identificacion}}</td>
+                    <td>{{$item->identificacion}}</td>
                     <td>{{$item->nombre}}</td>
                     <td>{{$item->fecha_nacimiento}}</td>
                     <td>

@@ -20,7 +20,7 @@ class PasajeroController extends Controller
     public function index($id)
     {
         $cuenta=CuentaCobro::find($id);
-        $pasajeros=Pasajero::where('cuenta_cobro_id',$cuenta->id)->orderBy('cedula', 'ASC')->paginate(10);
+        $pasajeros=Pasajero::where('cuenta_cobro_id',$cuenta->id)->orderBy('id', 'ASC')->paginate(10);
         return view('pay.pasajero.index',['cuenta'=>$cuenta, 'pasajeros'=>$pasajeros]);
     }
 
@@ -44,7 +44,8 @@ class PasajeroController extends Controller
     public function store(Request $request, $id)
     {
         $pasajero= new Pasajero();
-        $pasajero->cedula=$request->cedula;
+        $pasajero->identificacion=$request->identificacion;
+        $pasajero->tipo_identificacion=$request->tipo_identificacion;
         $pasajero->fecha_nacimiento= $request->fecha_nacimiento;
         $pasajero->nombre=$request->nombre;
         $pasajero->cuenta_cobro_id=$id;
@@ -88,7 +89,8 @@ class PasajeroController extends Controller
     public function update(Request $request, $id)
     {
         $pasajero= Pasajero::find($id);
-        $pasajero->cedula=$request->cedula;
+        $pasajero->identificacion=$request->identificacion;
+        $pasajero->tipo_identificacion=$request->tipo_identificacion;
         $pasajero->fecha_nacimiento= $request->fecha_nacimiento;
         $pasajero->nombre=$request->nombre;
         $pasajero->save();

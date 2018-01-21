@@ -20,6 +20,8 @@ class CuentaCobro extends Migration
             $table->integer('ano_ejecucuion_servicio');
             $table->integer('mes_ejecucuion_servicio');
             $table->integer('numero_ejecucuion_servicio');
+            $table->bigInteger('valor_total_numeros');
+            $table->text('valor_total_letras');
 
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('cliente')->onDelete('cascade');

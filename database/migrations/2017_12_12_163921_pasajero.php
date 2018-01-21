@@ -16,7 +16,8 @@ class Pasajero extends Migration
         Schema::create('pasajero', function (Blueprint $table) {
             $table->increments('id');
             $table->text('nombre');
-            $table->bigInteger('cedula');
+            $table->text('tipo_identificacion');
+            $table->text('identificacion');
             $table->date('fecha_nacimiento');
 
             $table->integer('cuenta_cobro_id')->unsigned();
