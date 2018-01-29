@@ -30,32 +30,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{route('cuentacobro.index')}}">Cuentas de Cobro <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('cliente.index')}}">Clientes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('tiposervicio.index')}}">Tipos de Servicios</a>
-                            </li>
-                            </ul>
-                            <ul class="navbar-nav navbar-right">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ Auth::user()->name }}
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/pay/logout">Salir</a>
-                                    </div>
-                                </li>
-                            </ul>
+                        </ul>
                     </div>
                 </nav>
             </div>
 
             <div id="content" style="display: flex; justify-content: center; align-items: center; margin-top:5%;">
-                <div class="card col-lg-8">
+                <div class="card col-md-6">
                     <div class="card-title">
                         <label><h3>@yield('title_section','Titulo de Seccion')</h3></label>
                     </div>
