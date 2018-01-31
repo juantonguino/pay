@@ -146,7 +146,7 @@ class CuentaCobroController extends Controller
     }
 
     public function report($id){
-        $templateProcessor= new TemplateProcessor('/home/juantonguino/laravel-projects/pay/resources/docs/cuenta_cobro.docx');
+        $templateProcessor= new TemplateProcessor('../resources/docs/cuenta_cobro.docx');
 
         //modelos
         $cuenta_cobro= CuentaCobro::find($id);
