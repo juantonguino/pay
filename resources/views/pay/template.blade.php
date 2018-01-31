@@ -54,7 +54,7 @@
                 </nav>
             </div>
 
-            <div id="content" style="display: flex; justify-content: center; align-items: center; margin-top:5%;">
+            <div id="content" style="height: 83vh; display: flex; justify-content: center; align-items: center; position: relative;">
                 <div class="card col-lg-8">
                     <div class="card-title">
                         <label><h3>@yield('title_section','Titulo de Seccion')</h3></label>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div id="footer" class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%;position:absolute; bottom:0; display:inline-block; overflow:hidden;">
+            <div id="footer" class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%;position:absolute; float:bottom;display:inline-block; overflow:hidden;">
                 <div style="float: left;">
                     <p class="">Todos los derechos resservados &copy {{date('Y')}}</p>
                 </div>
