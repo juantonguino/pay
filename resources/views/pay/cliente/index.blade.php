@@ -9,14 +9,16 @@
 <div class="row">
     <table class="table">
         <thead>
-            <th socpe="col">NIT</th>
+            <th socpe="col">Tipo de Identificación</th>
+            <th socpe="col">Identificación</th>
             <th scope="col">Nombre</th>
             <th scope="col">Opciones</th>
         </thead>
         <tbody>
             @foreach($clientes as $cliente)
             <tr>
-                <td>{{$cliente->nit}}</td>
+                <td>{{$cliente->tipo_identificacion}}</td>
+                <td>{{$cliente->identificacion}}</td>
                 <td>{{$cliente->nombre}}</td>
                 <td>
                     <a href="{{route('cliente.show', $cliente->id)}}" class="btn btn-primary glyphicon glyphicon-search" role="button">Ver</a>

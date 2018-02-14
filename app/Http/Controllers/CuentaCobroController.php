@@ -161,8 +161,9 @@ class CuentaCobroController extends Controller
         $templateProcessor->setValue('codigo', $cuenta_cobro->codigo);
         $templateProcessor->setValue('total_numero', $cuenta_cobro->valor_total_numeros);
         $templateProcessor->setValue('total_letras', $cuenta_cobro->valor_total_letras);
-        $templateProcessor->setValue('nombre_empresa', $cliente->nombre);
-        $templateProcessor->setValue('nit', $cliente->nit);
+        $templateProcessor->setValue('nombre_cliente', $cliente->nombre);
+        $templateProcessor->setValue('type_cliente', $cliente->tipo_identificacion);
+        $templateProcessor->setValue('id_cliente', $cliente->identificacion);
 
         $date= date('y-m-d');
         $fecha= explode("-", $date);

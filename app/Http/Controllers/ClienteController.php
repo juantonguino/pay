@@ -41,7 +41,8 @@ class ClienteController extends Controller
     {
         $cliente= new Cliente();
         $cliente->nombre= $request->nombre;
-        $cliente->nit=$request->nit;
+        $cliente->identificacion=$request->identificacion;
+        $cliente->tipo_identificacion=$request->tipo_identificacion;
         $cliente->save();
         Flash::success('Se ha agregado el cliente <b>'.$cliente->nombre.'</b> satisfactoriamente');
         return redirect()->route('cliente.index');
@@ -82,7 +83,8 @@ class ClienteController extends Controller
     {
         $cliente=Cliente::find($id);
         $cliente->nombre= $request->nombre;
-        $cliente->nit=$request->nit;
+        $cliente->identificacion=$request->identificacion;
+        $cliente->tipo_identificacion=$request->tipo_identificacion;
         $cliente->save();
         Flash::warning('Se ha modificado el cliente <b>'.$cliente->nombre.'</b> satisfactoriamente');
         return redirect()->route('cliente.index');
